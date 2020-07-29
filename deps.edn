@@ -136,6 +136,20 @@
                 "-i"
                 "--middleware" "[nrebl.middleware/wrap-nrebl,cider.nrepl/cider-middleware]"]}
 
+  ;; Runs REBL and rebel, but evaluations in rebel not sent to REBL.
+  ;; :rebel-nrebl
+  ;; {:extra-deps {nrepl                         {:mvn/version "0.7.0"}
+  ;;               cider/cider-nrepl             {:mvn/version "0.25.0"}
+  ;;               refactor-nrepl                {:mvn/version "2.5.0"}
+  ;;               rickmoynihan/nrebl.middleware {:mvn/version "0.3.1"}
+  ;;               com.bhauman/rebel-readline    {:mvn/version "0.1.4"}}
+  ;;  :main-opts  ["-e" "((requiring-resolve,'cognitect.rebl/ui))"
+  ;;               "-m" "nrepl.cmdline"
+  ;;               "--middleware" "[nrebl.middleware/wrap-nrebl,cider.nrepl/cider-middleware]"
+  ;;               "-i"
+  ;;               "-f" "rebel-readline.main/-main"]}
+
+
   ;; Supporting aliases for nrebl.middleware
 
   :nrepl
@@ -145,6 +159,122 @@
   {:extra-deps {cider/cider-nrepl {:mvn/version "0.25.0"}
                 refactor-nrepl    {:mvn/version "2.5.0"}}}
 
+
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; Experimental configurations - not working
+
+  ;; use rebel readline and require REBL once repl started,
+  ;; rebel works but (require 'cognitect.rebl) and (cognitect.repl/ui) only run the UI, not listening
+
+  ;; :rebel-with-rebl-deps
+  ;; {:extra-deps
+  ;;  {com.bhauman/rebel-readline  {:mvn/version "0.1.4"}
+  ;;   org.clojure/core.async      {:mvn/version "0.4.490"}
+  ;;   com.cognitect/rebl          {:local/root "/home/practicalli/.local/apps/rebel/REBL-0.9.220/REBL-0.9.220.jar"}
+  ;;   org.openjfx/javafx-fxml     {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-controls {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-swing    {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-base     {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-web      {:mvn/version "11.0.1"}}
+  ;;  :main-opts
+  ;;  ["-m" "rebel-readline.main"]}
+
+
+  ;; Example main-opts from sean corfield deps.edn
+  ;; clojure -A:rebel:repl-dynamic
+  ;; REBL works but rebel does not run
+  ;; :rebl-dynamic
+  ;; {:extra-deps
+  ;;  {com.bhauman/rebel-readline  {:mvn/version "0.1.4"}
+  ;;   org.clojure/core.async      {:mvn/version "0.4.490"}
+  ;;   com.cognitect/rebl          {:local/root "/home/practicalli/.local/apps/rebel/REBL-0.9.220/REBL-0.9.220.jar"}
+  ;;   org.openjfx/javafx-fxml     {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-controls {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-swing    {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-base     {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-web      {:mvn/version "11.0.1"}}
+  ;;  :main-opts
+  ;;  ["-e" "(->>(Thread/currentThread)(.getContextClassLoader)(clojure.lang.DynamicClassLoader.)(.setContextClassLoader,(Thread/currentThread)))"
+  ;;   "-m" "cognitect.rebl"]}
+
+
+  ;; :rebl-java11
+  ;; {:extra-deps {org.clojure/core.async {:mvn/version "0.4.490"}
+  ;;               ;; deps for file datafication (0.9.149 or later)
+  ;;               org.clojure/data.csv   {:mvn/version "0.1.4"}
+  ;;               org.clojure/data.json  {:mvn/version "0.2.3"}
+  ;;               org.yaml/snakeyaml     {:mvn/version "1.23"}
+
+  ;;               com.cognitect/rebl          {:local/root "/home/practicalli/.local/apps/rebel/REBL-0.9.220/REBL-0.9.220.jar"}
+  ;;               org.openjfx/javafx-fxml     {:mvn/version "11.0.1"}
+  ;;               org.openjfx/javafx-controls {:mvn/version "11.0.1"}
+  ;;               org.openjfx/javafx-graphics {:mvn/version "11.0.1"}
+  ;;               org.openjfx/javafx-media    {:mvn/version "11.0.1"}
+  ;;               org.openjfx/javafx-swing    {:mvn/version "11.0.1"}
+  ;;               org.openjfx/javafx-base     {:mvn/version "11.0.1"}
+  ;;               org.openjfx/javafx-web      {:mvn/version "11.0.1"}}
+  ;;  :main-opts ["-m" "cognitect.rebl"]}
+
+
+
+  ;; :cognitect-rebl-extra
+  ;; {:extra-deps
+  ;;  {com.bhauman/rebel-readline {:mvn/version "0.1.4"}
+  ;;   org.clojure/core.async     {:mvn/version "0.4.490"}
+  ;;   ;; deps for file datafication (0.9.149 or later)
+  ;;   org.clojure/data.csv       {:mvn/version "0.1.4"}
+  ;;   org.clojure/data.json      {:mvn/version "0.2.3"}
+  ;;   org.yaml/snakeyaml         {:mvn/version "1.23"}
+
+  ;;   ;; adjust to match your install location
+  ;;   com.cognitect/rebl          {:local/root "/home/practicalli/.local/apps/rebel/REBL-0.9.220/REBL-0.9.220.jar"}
+  ;;   org.openjfx/javafx-fxml     {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-controls {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-graphics {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-media    {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-swing    {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-base     {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-web      {:mvn/version "11.0.1"}}
+  ;;  :main-opts
+  ;;  ["-m" "cognitect.rebl"]}
+
+
+
+  ;; ;; Experiements to run rebel readline and REBL together
+  ;; ;; only runs REBL and there is only C-c to exit, so rebel never runs
+  ;; :rebel-rebl
+  ;; {:extra-deps
+  ;;  {com.bhauman/rebel-readline  {:mvn/version "0.1.4"}
+  ;;   org.clojure/clojure         {:mvn/version "1.10.0"}
+  ;;   org.clojure/core.async      {:mvn/version "0.4.490"}
+  ;;   com.cognitect/rebl          {:local/root "/home/practicalli/.local/apps/rebel/REBL-0.9.220/REBL-0.9.220.jar"}
+  ;;   org.openjfx/javafx-fxml     {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-controls {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-swing    {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-base     {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-web      {:mvn/version "11.0.1"}}
+  ;;  :main-opts
+  ;;  ["-e" "((requiring-resolve,'cognitect.rebl/-main))"
+  ;;   "-m" "rebel-readline.main"]}
+
+
+
+  ;; ;; will first run rebel readline and when that is closed it runs REBL
+  ;; :rebl-rebel
+  ;; {:extra-deps
+  ;;  {com.bhauman/rebel-readline  {:mvn/version "0.1.4"}
+  ;;   org.clojure/clojure         {:mvn/version "1.10.0"}
+  ;;   org.clojure/core.async      {:mvn/version "0.4.490"}
+  ;;   com.cognitect/rebl          {:local/root "/home/practicalli/.local/apps/rebel/REBL-0.9.220/REBL-0.9.220.jar"}
+  ;;   org.openjfx/javafx-fxml     {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-controls {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-swing    {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-base     {:mvn/version "11.0.1"}
+  ;;   org.openjfx/javafx-web      {:mvn/version "11.0.1"}}
+  ;;  :main-opts
+  ;;  ["-e" "((requiring-resolve,'rebel-readline.clojure.main/-main))"
+  ;;   "-m" "cognitect.rebl"]}
 
 
   ;; End of REBL data browser
@@ -306,6 +436,18 @@
   :idiom-check
   {:extra-deps {tvaughan/kibit-runner {:mvn/version "0.2.3"}}
    :main-opts  ["-m" "kibit-runner.cmdline"]}
+
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; EXPERIMENTAL - use at your own risk, you have been warned
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; Carve - search through code for unused vars and remove them
+  :carve
+  {:extra-deps {borkdude/carve
+                {:git/url "https://github.com/borkdude/carve"
+                 :sha     "542078b21d72a96848bc342e57aa560339b79698"}}
+   :main-opts  ["-m" "carve.main"]}
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
   ;; Dependency version management
